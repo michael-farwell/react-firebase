@@ -17,7 +17,13 @@ export async function getServerSideProps ({ query }) {
                               .where("published", "==", true)
                               .orderBy("createdAt", "desc")
                               .limit(5);
-    posts = (await postsQuery.get()).docs.map(postToJSON)
+    posts = (await postsQuery.get()).docs.map(postToJSON);
+  }
+
+  if (!userDoc) {
+    return {
+      notFound: true,
+    };
   }
 
   return {
